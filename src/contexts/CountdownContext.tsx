@@ -12,16 +12,18 @@ interface CountdownContextData {
 
 interface CountodwnProviderProps {
     children: ReactNode;
+    fullTime: number;
 }
 
 export const CountdownContext = createContext({} as CountdownContextData)
 
 let countdowTimeout: NodeJS.Timeout;
 
-export function CountdownProvider({ children }: CountodwnProviderProps) {
+export function CountdownProvider({ children, ...rest }: CountodwnProviderProps) {
     const { startNewChallenge } = useContext(ChallengesContext);
+    const fullTime = rest.fullTime;
 
-    const [time, setTime] = useState(0.05 * 60);
+    const [time, setTime] = useState(fullTime * 60);
     const [isActive, setIsActive] = useState(false);
     const [hasFinished, setHasFinished] = useState(false);
 
@@ -35,7 +37,7 @@ export function CountdownProvider({ children }: CountodwnProviderProps) {
     function resetCountdown() {
         clearTimeout(countdowTimeout);
         setIsActive(false);
-        setTime(0.05 * 60);
+        setTime(fullTime * 60);
         setHasFinished(false);
     }
 
