@@ -31,7 +31,9 @@ export default function Home(props) {
             </Head>
             <ExperienceBar />
 
-        <CountdownProvider>
+        <CountdownProvider
+            fullTime={props.fullTime}
+        >
             <section>
                 <div>
                     <Profile />
@@ -50,12 +52,14 @@ export default function Home(props) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
+    const fullTime = process.env.REACT_APP_COUNTDOWN_TIME;
 
     return {
         props: {
             level: Number(level),
             currentExperience: Number(currentExperience),
-            challengesCompleted: Number(challengesCompleted)
+            challengesCompleted: Number(challengesCompleted),
+            fullTime: Number(fullTime)
         }
     }
 }
