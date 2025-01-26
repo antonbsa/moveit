@@ -13,11 +13,12 @@ import { ChallengesProvider } from '../contexts/ChallengesContext';
 
 interface HomeProps {
     level: number,
+    fullTime: number,
     currentExperience: number,
     challengesCompleted: number
 }
 
-export default function Home(props) {
+export default function Home(props: HomeProps) {
 
   return (
     <ChallengesProvider

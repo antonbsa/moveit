@@ -10,16 +10,16 @@ interface CountdownContextData {
     resetCountdown: () => void;
 }
 
-interface CountodwnProviderProps {
+interface CountdownProviderProps {
     children: ReactNode;
     fullTime: number;
 }
 
 export const CountdownContext = createContext({} as CountdownContextData)
 
-let countdowTimeout: NodeJS.Timeout;
+let countdownTimeout: NodeJS.Timeout;
 
-export function CountdownProvider({ children, ...rest }: CountodwnProviderProps) {
+export function CountdownProvider({ children, ...rest }: CountdownProviderProps) {
     const { startNewChallenge } = useContext(ChallengesContext);
     const fullTime = rest.fullTime;
 
@@ -35,7 +35,7 @@ export function CountdownProvider({ children, ...rest }: CountodwnProviderProps)
     }
 
     function resetCountdown() {
-        clearTimeout(countdowTimeout);
+        clearTimeout(countdownTimeout);
         setIsActive(false);
         setTime(fullTime * 60);
         setHasFinished(false);
@@ -43,7 +43,7 @@ export function CountdownProvider({ children, ...rest }: CountodwnProviderProps)
 
     useEffect(() => {
         if(isActive && time > 0) {
-            countdowTimeout = setTimeout(() => {
+            countdownTimeout = setTimeout(() => {
                 setTime(time - 1);
             }, 1000)
         } else if( isActive && time == 0 ) {
